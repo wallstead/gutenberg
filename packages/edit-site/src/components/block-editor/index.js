@@ -22,6 +22,7 @@ import {
 	useBlockSelectionClearer,
 } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
+import { useResizeObserver } from '@wordpress/compose';
 
 /**
  * Internal dependencies
@@ -31,7 +32,7 @@ import NavigateToLink from '../navigate-to-link';
 import { SidebarInspectorFill } from '../sidebar';
 
 const bodyFix = {
-	css: 'body{margin:0px;}',
+	css: 'body{margin:0px;position:relative;}',
 };
 
 const alignmentFix = {
@@ -164,6 +165,7 @@ export default function BlockEditor( { setIsInserterOpen } ) {
 	const { setPage } = useDispatch( 'core/edit-site' );
 
 	const inlineStyles = useResizeCanvas( deviceType );
+	const [ resizeListener, sizes ] = useResizeObserver();
 
 	return (
 		<BlockEditorProvider
@@ -192,7 +194,11 @@ export default function BlockEditor( { setIsInserterOpen } ) {
 			</SidebarInspectorFill>
 			<IFrame
 				className="edit-site-visual-editor"
-				style={ inlineStyles }
+				style={ {
+					width: '100%',
+					height: sizes.height + 'px',
+					...inlineStyles,
+				} }
 				head={ window.__editorStyles.html }
 				styles={ settings.styles }
 				bodyClassName="editor-styles-wrapper edit-site-block-editor__editor-styles-wrapper"
@@ -202,6 +208,7 @@ export default function BlockEditor( { setIsInserterOpen } ) {
 						<BlockList className="edit-site-block-editor__block-list" />
 					</ObserveTyping>
 				</WritingFlow>
+				{ resizeListener }
 			</IFrame>
 		</BlockEditorProvider>
 	);
