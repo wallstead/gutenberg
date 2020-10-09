@@ -13,10 +13,7 @@ import {
 import { EntityProvider } from '@wordpress/core-data';
 import {
 	BlockContextProvider,
-	BlockSelectionClearer,
 	BlockBreadcrumb,
-	__unstableEditorStyles as EditorStyles,
-	__experimentalUseResizeCanvas as useResizeCanvas,
 	__experimentalLibrary as Library,
 } from '@wordpress/block-editor';
 import {
@@ -50,7 +47,6 @@ function Editor() {
 	const {
 		isFullscreenActive,
 		isInserterOpen,
-		deviceType,
 		sidebarIsOpened,
 		settings,
 		entityId,
@@ -63,7 +59,6 @@ function Editor() {
 		const {
 			isFeatureActive,
 			isInserterOpened,
-			__experimentalGetPreviewDeviceType,
 			getSettings,
 			getTemplateId,
 			getTemplatePartId,
@@ -85,7 +80,6 @@ function Editor() {
 		return {
 			isInserterOpen: isInserterOpened(),
 			isFullscreenActive: isFeatureActive( 'fullscreenMode' ),
-			deviceType: __experimentalGetPreviewDeviceType(),
 			sidebarIsOpened: !! _select(
 				'core/interface'
 			).getActiveComplementaryArea( 'core/edit-site' ),
@@ -106,8 +100,6 @@ function Editor() {
 	}, [] );
 	const { editEntityRecord } = useDispatch( 'core' );
 	const { setPage, setIsInserterOpened } = useDispatch( 'core/edit-site' );
-
-	const inlineStyles = useResizeCanvas( deviceType );
 
 	const [
 		isEntitiesSavedStatesOpen,
@@ -173,7 +165,6 @@ function Editor() {
 
 	return (
 		<>
-			<EditorStyles styles={ settings.styles } />
 			<FullscreenMode isActive={ isFullscreenActive } />
 			<UnsavedChangesWarning />
 			<SlotFillProvider>
@@ -266,12 +257,7 @@ function Editor() {
 														/>
 													}
 													content={
-														<BlockSelectionClearer
-															className="edit-site-visual-editor"
-															style={
-																inlineStyles
-															}
-														>
+														<>
 															<Notices />
 															<Popover.Slot name="block-toolbar" />
 															{ template && (
@@ -282,7 +268,7 @@ function Editor() {
 																/>
 															) }
 															<KeyboardShortcuts />
-														</BlockSelectionClearer>
+														</>
 													}
 													actions={
 														<>
