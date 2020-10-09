@@ -30,6 +30,10 @@ import TemplatePartConverter from '../template-part-converter';
 import NavigateToLink from '../navigate-to-link';
 import { SidebarInspectorFill } from '../sidebar';
 
+const bodyFix = {
+	css: 'body{margin:0px;}',
+};
+
 const alignmentFix = {
 	css:
 		'.wp-block[data-align="full"],.wp-block.alignfull{max-width:100vw!important;width:100vw!important;}',
@@ -49,7 +53,6 @@ function IframeContent( { children, doc, head, styles, bodyClassName } ) {
 
 	useEffect( () => {
 		doc.body.className = bodyClassName;
-		doc.body.style.margin = '0';
 		doc.head.innerHTML = head;
 		doc.dir = document.dir;
 
@@ -59,7 +62,7 @@ function IframeContent( { children, doc, head, styles, bodyClassName } ) {
 			}
 		} );
 
-		[ ...styles, alignmentFix ].forEach( ( { css } ) => {
+		[ bodyFix, ...styles, alignmentFix ].forEach( ( { css } ) => {
 			const styleEl = doc.createElement( 'style' );
 			styleEl.innerHTML = css;
 			doc.head.appendChild( styleEl );
