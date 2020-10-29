@@ -204,6 +204,7 @@ function ButtonEdit( props ) {
 			<ColorEdit { ...props } />
 			<div { ...blockProps }>
 				<RichText
+					aria-label={ __( 'Button text' ) }
 					placeholder={ placeholder || __( 'Add text…' ) }
 					value={ text }
 					onChange={ ( value ) => setAttributes( { text: value } ) }

@@ -103,6 +103,7 @@ function PostExcerptEditor( {
 						! showMoreOnNewLine &&
 						'wp-block-post-excerpt__excerpt is-inline'
 					}
+					aria-label={ __( 'Post excerpt text' ) }
 					placeholder={ postContentExcerpt }
 					value={
 						excerpt ||
@@ -119,6 +120,7 @@ function PostExcerptEditor( {
 					<p className="wp-block-post-excerpt__more-text">
 						<RichText
 							tagName="a"
+							aria-label={ __( 'Read more link text' ) }
 							placeholder={ __( 'Read more…' ) }
 							value={ moreText }
 							onChange={ ( newMoreText ) =>
@@ -129,6 +131,7 @@ function PostExcerptEditor( {
 				) : (
 					<RichText
 						tagName="a"
+						aria-label={ __( 'Read more link text' ) }
 						placeholder={ __( 'Read more…' ) }
 						value={ moreText }
 						onChange={ ( newMoreText ) =>

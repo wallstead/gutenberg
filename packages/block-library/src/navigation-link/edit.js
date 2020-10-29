@@ -359,6 +359,7 @@ function NavigationLinkEdit( {
 								createBlock( 'core/navigation-link' )
 							)
 						}
+						aria-label={ __( 'Navigation link text' ) }
 						placeholder={ itemLabelPlaceholder }
 						keepPlaceholderOnFocus
 						withoutInteractiveFormatting
