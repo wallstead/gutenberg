@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Internal
+
+-   The bundled `ignore-emit-webpack-plugin` dependency has been updated from requiring `2.0.3` to requiring `^2.0.5`.
+
 ## 12.5.0 (2020-10-30)
 
 ### Enhancements
