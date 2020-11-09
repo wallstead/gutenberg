@@ -15,3 +15,24 @@ const MySandBox = () => (
 	/>
 );
 ```
+
+### Extensibility
+
+The `editor.Sandbox` is a filter that allows extending the component. For instance, it's useful when adding custom styles are required:
+
+```es6
+const extendedSandboxed = Sandbox => props => {
+	const style = `
+		.my-full-width-embed {
+			width: 100%;
+			min-width: 100%;
+		};
+	`;
+
+	return (
+		<Sandbox { ...props } styles={ [ style ] } />
+	);
+};
+
+addFilter( 'editor.Sandbox', 'my-site/loom-custom-sandbox', extendedSandboxed );
+```
