@@ -6,7 +6,8 @@ import { upperFirst, camelCase, map, find, get, startCase } from 'lodash';
 /**
  * WordPress dependencies
  */
-import { apiFetch, syncSelect } from '@wordpress/data-controls';
+import { controls } from '@wordpress/data';
+import { apiFetch } from '@wordpress/data-controls';
 import { __ } from '@wordpress/i18n';
 
 /**
@@ -133,10 +134,14 @@ function* loadPostTypeEntities() {
 			},
 			mergedEdits: { meta: true },
 			getTitle( record ) {
-				if ( name === 'wp_template_part' || name === 'wp_template' ) {
-					return startCase( record.slug );
+				if ( [ 'wp_template_part', 'wp_template' ].includes( name ) ) {
+					return (
+						record?.title?.rendered ||
+						record?.title ||
+						startCase( record.slug )
+					);
 				}
-				return get( record, [ 'title', 'rendered' ], record.id );
+				return record?.title?.rendered || record?.title || record.id;
 			},
 		};
 	} );
@@ -196,7 +201,7 @@ export const getMethodName = (
  * @return {Array} Entities
  */
 export function* getKindEntities( kind ) {
-	let entities = yield syncSelect( 'core', 'getEntitiesByKind', kind );
+	let entities = yield controls.select( 'core', 'getEntitiesByKind', kind );
 	if ( entities && entities.length !== 0 ) {
 		return entities;
 	}
