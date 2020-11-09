@@ -1,7 +1,10 @@
 /**
  * WordPress dependencies
  */
-import { VisualEditorGlobalKeyboardShortcuts } from '@wordpress/editor';
+import {
+	VisualEditorGlobalKeyboardShortcuts,
+	PostTitle,
+} from '@wordpress/editor';
 import {
 	WritingFlow,
 	Typewriter,
@@ -22,8 +25,14 @@ import BlockInspectorButton from './block-inspector-button';
 import { useSelect } from '@wordpress/data';
 
 function VisualEditor() {
-	const deviceType = useSelect( ( select ) => {
-		return select( 'core/edit-post' ).__experimentalGetPreviewDeviceType();
+	const { deviceType, templateZoomOut } = useSelect( ( select ) => {
+		const { isFeatureActive, __experimentalGetPreviewDeviceType } = select(
+			'core/edit-post'
+		);
+		return {
+			deviceType: __experimentalGetPreviewDeviceType(),
+			templateZoomOut: isFeatureActive( 'templateZoomOut' ),
+		};
 	}, [] );
 
 	const inlineStyles = useResizeCanvas( deviceType );
@@ -40,6 +49,11 @@ function VisualEditor() {
 				<CopyHandler>
 					<WritingFlow>
 						<ObserveTyping>
+							{ ! templateZoomOut && (
+								<div className="edit-post-visual-editor__post-title-wrapper">
+									<PostTitle />
+								</div>
+							) }
 							<BlockList />
 						</ObserveTyping>
 					</WritingFlow>
