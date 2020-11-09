@@ -258,6 +258,17 @@ function filter_rest_wp_template_query( $args, $request ) {
 }
 add_filter( 'rest_wp_template_query', 'filter_rest_wp_template_query', 99, 2 );
 
+/**
+ * Create the templates and template parts auto-drafts for the current theme.
+ * If the current theme is a child theme then the parent theme is synchronized as well.
+ * Runs only if current or parent theme was never loaded before or it is a newer version.
+ *
+ * To force synchronization on every load define BLOCK_THEME_DEV_MODE constant with true value.
+ *
+ * ```php
+ * define( 'BLOCK_THEME_DEV_MODE', true );
+ * ```
+ */
 function gutenberg_synchronize_theme_templates_on_version_change() {
 	$create_auto_drafts = false;
 
