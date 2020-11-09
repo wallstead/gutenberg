@@ -12,6 +12,7 @@ import {
  * Internal dependencies
  */
 import FocusableIframe from '../focusable-iframe';
+import withFilters from '../higher-order/with-filters';
 
 const observeAndResizeJS = `
 	( function() {
@@ -95,7 +96,7 @@ const style = `
 	}
 `;
 
-export default function Sandbox( {
+function Sandbox( {
 	html = '',
 	title = '',
 	type,
@@ -242,3 +243,5 @@ export default function Sandbox( {
 		/>
 	);
 }
+
+export default withFilters( 'editor.Sandbox' )( Sandbox );
