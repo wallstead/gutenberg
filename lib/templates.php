@@ -291,11 +291,8 @@ function gutenberg_create_template_auto_drafts() {
 		return;
 	}
 
-	$block_template_files = gutenberg_get_template_paths();
-	foreach ( $block_template_files as $path ) {
-		$template_type = basename( $path, '.html' );
-		gutenberg_find_template_post_and_parts( $template_type, array( $template_type ) );
-	}
+	_gutenberg_synchronize_theme_templates( 'template-part' );
+	_gutenberg_synchronize_theme_templates( 'template' );
 
 	$last_auto_drafts_versions[ $stylesheet ] = $theme->Version;
 	if ( $parent_theme ) {
