@@ -258,7 +258,7 @@ function filter_rest_wp_template_query( $args, $request ) {
 }
 add_filter( 'rest_wp_template_query', 'filter_rest_wp_template_query', 99, 2 );
 
-function gutenberg_create_template_auto_drafts() {
+function gutenberg_synchronize_theme_templates_on_version_change() {
 	$create_auto_drafts = false;
 
 	$theme             = wp_get_theme();
@@ -300,14 +300,14 @@ function gutenberg_create_template_auto_drafts() {
 	}
 	update_option( 'gutenberg_last_template_auto_drafts_theme_versions', $last_auto_drafts_versions );
 }
-add_action( 'wp_loaded', 'gutenberg_create_template_auto_drafts' );
+add_action( 'wp_loaded', 'gutenberg_synchronize_theme_templates_on_version_change' );
 
 function gutenberg_create_template_auto_drafts_on_shutdown() {
 	if ( ! gutenberg_is_block_editor() ) {
 		return;
 	}
 
-	gutenberg_create_template_auto_drafts();
+	gutenberg_synchronize_theme_templates_on_version_change();
 }
 register_shutdown_function( 'gutenberg_create_template_auto_drafts_on_shutdown' );
 
