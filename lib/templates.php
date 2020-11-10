@@ -286,7 +286,7 @@ function gutenberg_synchronize_theme_templates_on_version_change() {
 	$last_auto_drafts_versions = get_option( 'gutenberg_last_template_auto_drafts_theme_versions', array() );
 	if ( isset( $last_auto_drafts_versions[ $stylesheet ] ) ) {
 		$last_version = $last_auto_drafts_versions[ $stylesheet ];
-		if ( version_compare( $theme->Version, $last_version, '>' ) ) {
+		if ( version_compare( $theme->version, $last_version, '>' ) ) {
 			$create_auto_drafts = true;
 		}
 	} else {
@@ -296,7 +296,7 @@ function gutenberg_synchronize_theme_templates_on_version_change() {
 	if ( $parent_theme ) {
 		if ( isset( $last_auto_drafts_versions[ $parent_stylesheet ] ) ) {
 			$last_version = $last_auto_drafts_versions[ $parent_stylesheet ];
-			if ( version_compare( $parent_theme->Version, $last_version, '>' ) ) {
+			if ( version_compare( $parent_theme->version, $last_version, '>' ) ) {
 				$create_auto_drafts = true;
 			}
 		} else {
@@ -311,9 +311,9 @@ function gutenberg_synchronize_theme_templates_on_version_change() {
 	_gutenberg_synchronize_theme_templates( 'template-part' );
 	_gutenberg_synchronize_theme_templates( 'template' );
 
-	$last_auto_drafts_versions[ $stylesheet ] = $theme->Version;
+	$last_auto_drafts_versions[ $stylesheet ] = $theme->version;
 	if ( $parent_theme ) {
-		$last_auto_drafts_versions[ $parent_stylesheet ] = $parent_theme->Version;
+		$last_auto_drafts_versions[ $parent_stylesheet ] = $parent_theme->version;
 	}
 	update_option( 'gutenberg_last_template_auto_drafts_theme_versions', $last_auto_drafts_versions );
 }
