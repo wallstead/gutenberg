@@ -54,7 +54,14 @@ const entityActions = defaultEntities.reduce( ( result, entity ) => {
 	return result;
 }, {} );
 
-registerStore( REDUCER_KEY, {
+/**
+ * Store registered for the code data namespace.
+ *
+ * @see https://github.com/WordPress/gutenberg/blob/master/packages/data/README.md#registerStore
+ *
+ * @type {Object}
+ */
+export const coreDataStore = registerStore( REDUCER_KEY, {
 	reducer,
 	controls,
 	actions: { ...actions, ...entityActions },
