@@ -21,6 +21,13 @@ import { MENU_ROOT, MENU_TEMPLATE_PARTS } from '../constants';
 import SearchResults from '../search-results';
 import useDebouncedSearch from '../use-debounced-search';
 
+const renderSearchResultItem = ( templatePart ) => (
+	<TemplateNavigationItem
+		item={ templatePart }
+		key={ `wp_template_part-${ templatePart.id }` }
+	/>
+);
+
 export default function TemplatePartsMenu() {
 	const {
 		search,
@@ -34,9 +41,8 @@ export default function TemplatePartsMenu() {
 			select( 'core' ).getEntityRecords( 'postType', 'wp_template_part', {
 				status: [ 'publish', 'auto-draft' ],
 				per_page: -1,
-				search: searchQuery,
 			} ),
-		[ searchQuery ]
+		[]
 	);
 
 	return (
@@ -51,16 +57,10 @@ export default function TemplatePartsMenu() {
 			{ search && (
 				<SearchResults
 					items={ templateParts }
+					searchQuery={ searchQuery }
+					renderItem={ renderSearchResultItem }
 					isDebouncing={ isDebouncing }
-					search={ search }
-				>
-					{ map( templateParts, ( templatePart ) => (
-						<TemplateNavigationItem
-							item={ templatePart }
-							key={ `wp_template_part-${ templatePart.id }` }
-						/>
-					) ) }
-				</SearchResults>
+				/>
 			) }
 
 			{ ! search &&
