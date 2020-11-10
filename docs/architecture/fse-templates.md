@@ -30,6 +30,13 @@ The synchronization is important for two different flows:
  - When rendering a template (sometimes referred to as "resolving a template"): this is the algorithm that WordPress follows to traverse the template hierarchy and find the right template to render for the current page being loaded.
  - When exporting a block-based theme, we need to export all its templates back as files. The synchronizaion is required in order to simplify the operation and only export the CPT templates.
 
+Synchronization is triggered in the following situations:
+
+ - When a theme is activated for the first time, including parent theme
+ - When the current theme or the parent theme is updated
+
+Synchronization can be forced to trigger on every page load by defining the `BLOCK_THEME_DEV_MODE` constant with a truthy value. This is helpful for theme developers who are working on the template files and want to see the changes on every load.
+
 ## Switching themes
 
 Since block-based themes make use of templates that can refer to each other and that can be saved to a custom post type, it becomes possible to mix templates and template parts from different themes. For example:
