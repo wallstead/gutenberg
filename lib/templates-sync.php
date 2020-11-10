@@ -44,8 +44,11 @@ function _gutenberg_create_auto_draft_for_template( $post_type, $slug, $theme, $
 				'post_name'    => $slug,
 			)
 		);
-	} else {
-		// Potentially we could decide to update the content if different.
+	} elseif ( 'auto-draft' === $post->post_status && $content !== $post->post_content ) {
+		// If the template already exists, but it was never changed by the user
+		// and the template file content changed then update the content of auto-draft.
+		$post->post_content = $content;
+		wp_insert_post( $post );
 	}
 }
 
